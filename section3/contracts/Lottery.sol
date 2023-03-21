@@ -1,10 +1,11 @@
-pragma solidity ^0.4.17;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
 
 contract Lottery {
   address public manager;
   address[] public players;
 
-  function Lottery() public {
+  constructor() {
     manager = msg.sender;
   }
 
@@ -15,13 +16,20 @@ contract Lottery {
   }
 
   function random() private view returns (uint) {
-    return uint(keccak256(block.difficulty, now, players));
+    //return uint(keccak256(block.timestamp));
+    return uint(block.timestamp);
   }
 
   function pickWinner() public restricted {
     uint index = random() % players.length;
-    players[index].transfer(this.balance);
-    players = new address[](0);
+    // - the unit wei (the syntax is no longer recommended)
+    // players[index].transfer(this.balance);
+    // - data is declared, but not used, so that "Warning: Unused local variable" is displayed
+    // (bool sent, bytes memory data) = players[index].call{value: address(this).balance}("");
+    (bool sent,) = players[index].call{value: address(this).balance}("");
+
+    require(sent, "Failed to send Ether");
+    players = new address[](0); // create dynamic array with initially size 0
   }
 
   modifier restricted() {
@@ -29,7 +37,7 @@ contract Lottery {
     _;
   }
 
-  function getPlayers() public view returns (address[]) {
+  function getPlayers() public view returns (address[] memory) {
     return players;
   }
 }
