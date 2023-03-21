@@ -1,18 +1,16 @@
-pragma solidity ^0.4.17;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
+// linter warnings (red underline) about pragma version can igonored!
 
+// contract code will go here
 contract Inbox {
-  string public message; // this is like an instance variable. The data is stored in the storage.
+  string public message;
 
-  function Inbox(string initialMessage) public {  // constructor function
+  constructor(string memory initialMessage) {
     message = initialMessage;
   }
 
-  // NOTE: constructor を使うパターン（Solidity v0.4.23〜）
-  // constructor(string initialMessage) public {
-  //   message = initialMessage;
-  // }
-
-  function setMessage(string newMessage) public {
+  function setMessage(string memory newMessage) public {
     message = newMessage;
   }
 }
