@@ -15,5 +15,8 @@
     "mocha": "^9.1.2",
     "solc": "^0.4.17",
     "web3": "^1.6.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.2"
   }
 }
