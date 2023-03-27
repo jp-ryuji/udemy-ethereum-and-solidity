@@ -2,11 +2,11 @@ const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require("web3");
 const compiledFactory = require("./build/CampaignFactory.json");
 
+require("dotenv").config();
+
 const provider = new HDWalletProvider(
-  "YOUR_MNEMONIC",
-  // remember to change this to your own phrase!
-  "YOUR_INFURA_URL"
-  // remember to change this to your own endpoint!
+  process.env.MNEMONIC,
+  process.env.GOERLI_ENDPOINT_WITH_API_KEY,
 );
 const web3 = new Web3(provider);
 
