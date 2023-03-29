@@ -31,7 +31,8 @@ class RequestNew extends Component {
     try {
       const accounts = await web3.eth.getAccounts();
       await campaign.methods
-        .createRequest(description, web3.utils.toWei(value, "ether"), recipient)
+        // .createRequest(description, web3.utils.toWei(value, "ether"), recipient)
+        .createRequest(description, value, recipient)
         .send({ from: accounts[0] });
       Router.pushRoute(`/campaigns/${this.props.address}/requests`);
     } catch (err) {
@@ -58,7 +59,7 @@ class RequestNew extends Component {
             />
           </Form.Field>
           <Form.Field>
-            <label>Value in Ether</label>
+            <label>Value in Wei</label>
             <Input
               value={this.state.value}
               onChange={(event) => this.setState({ value: event.target.value })}
